@@ -1,9 +1,6 @@
 import pytest
 from support_test.mock_emul import MocksBurger as smock
-from unittest.mock import Mock
 from burger import Burger
-from bun import Bun
-from ingredient import Ingredient
 
 class TestBurger:
     #Проверка инициализации бургера
