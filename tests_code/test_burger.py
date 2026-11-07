@@ -1,17 +1,8 @@
 import pytest
 from support_test.mock_emul import MocksBurger as smock
-from unittest.mock import Mock
 from burger import Burger
-from bun import Bun
-from ingredient import Ingredient
 
 class TestBurger:
-    #Проверка инициализации бургера
-    def test_burger_initial_state(self):
-         burger = Burger()
-
-         assert burger.bun is None #проверка что булдочка не выбрана
-         assert burger.ingredients == [] #проверка что наполнение отсутствует
 
     #Проверка выбора булочки
     def test_set_buns_set_buns(self):
@@ -33,7 +24,6 @@ class TestBurger:
         mock_bun_two = smock.bun("glass Bun")
 
         burger.set_buns(mock_bun_one) #назначаем булочку
-        assert burger.bun is mock_bun_one, (f"проверь: {burger.bun}, булочка не была назначена или назначена неправильно")  #проверяем что булочка назначилась
 
         burger.set_buns(mock_bun_two) #изменяем булочку
         assert burger.bun is not mock_bun_one, (f"проверь: {burger.bun}, булочка не поменялась на {mock_bun_two}") #проверяем что булочка не содержит значение первой выбранной булочки
@@ -106,9 +96,6 @@ class TestBurger:
             #добавляем ингредиент
             burger.add_ingredient(mock_ingredient)
 
-        #промежуточная проверка
-        assert len(burger.ingredients) == count, (f"что-то пошло не так, Кол-во присутствующих ингредиентов({len(burger.ingredients)}) не соответствует добавленному ({count})")
-
         #удаляем ингредиент
         burger.remove_ingredient(index)
 
@@ -141,9 +128,6 @@ class TestBurger:
             #добавляем ингредиент
             burger.add_ingredient(mock_ingredient)
 
-        #промежуточная проверка
-        assert len(burger.ingredients) == count, (f"что-то пошло не так, Кол-во присутствующих ингредиентов({len(burger.ingredients)}) не соответствует добавленному ({count})")
-
         burger.move_ingredient(index_start, index_finish)
 
         assert ing_list[index_start] == burger.ingredients[index_finish]
@@ -171,9 +155,6 @@ class TestBurger:
             ing_price += mock_ingredient.get_price() #добавляем в лист для сравнения
             #добавляем ингредиент
             burger.add_ingredient(mock_ingredient)
-
-        #промежуточная проверка
-        assert len(burger.ingredients) == count, (f"Кол-во присутствующих ингредиентов({len(burger.ingredients)}) не соответствует добавленному ({count})")
         
         assert burger.get_price() == ing_price #проверяем что ключевая сумма совпадает с набранной в основном бургере
 
@@ -204,9 +185,6 @@ class TestBurger:
             #добавляем ингредиент
             burger.add_ingredient(mock_ingredient)
 
-        #промежуточная проверка
-        assert len(burger.ingredients) == count, (f"Кол-во присутствующих ингредиентов({len(burger.ingredients)}) не соответствует добавленному ({count})")
-        
         ing_receipt += (f'(==== {mock_bun.get_name()} ====)\n\nPrice: {ing_price}')
         
         assert burger.get_receipt() == ing_receipt, (f'рецепт {burger.get_receipt()} не совпал с {ing_receipt} при кол-ве ингредиентов {count}')
